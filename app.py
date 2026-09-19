@@ -10,6 +10,11 @@ import imageio_ffmpeg
 
 # Use bundled ffmpeg binary
 FFMPEG_BIN = imageio_ffmpeg.get_ffmpeg_exe()
+
+PEXELS_API_KEY = os.environ.get("PEXELS_API_KEY", "")
+
+# ─── Script generation templates ───────────────────────────────────────────────
+
 TEMPLATES = {
     "mystery": {
         "hooks": [
@@ -218,7 +223,7 @@ def create_slide_clip(slide_text, video_url, tmpdir, slide_idx, duration=5):
             try:
                 font_path = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
                 cmd = [
-                    "ffmpeg", "-y",
+                    FFMPEG_BIN, "-y",
                     "-i", raw_path,
                     "-t", str(duration),
                     "-vf",
@@ -241,7 +246,7 @@ def create_slide_clip(slide_text, video_url, tmpdir, slide_idx, duration=5):
     img_path = os.path.join(tmpdir, f"frame_{slide_idx:02d}.png")
     img.save(img_path)
     cmd = [
-        "ffmpeg", "-y",
+        FFMPEG_BIN, "-y",
         "-loop", "1", "-i", img_path,
         "-t", str(duration),
         "-c:v", "libx264", "-preset", "fast",
@@ -281,7 +286,7 @@ def generate_video(topic, tone, slides_count, progress=gr.Progress()):
 
         out_path = os.path.join(tmpdir, "final.mp4")
         cmd = [
-            "ffmpeg", "-y",
+            FFMPEG_BIN, "-y",
             "-f", "concat", "-safe", "0",
             "-i", list_file,
             "-c", "copy",
@@ -322,7 +327,6 @@ def run(topic, tone_label, slides_count, progress=gr.Progress()):
 
 
 with gr.Blocks(title="ScriptForge — AI Video Generator") as demo:
-
     gr.Markdown("# ⚡ ScriptForge")
     gr.HTML('<p class="subtitle">Вводи тему → получай готовое вертикальное видео</p>')
 
