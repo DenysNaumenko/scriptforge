@@ -361,5 +361,5 @@ with gr.Blocks(title="ScriptForge — AI Video Generator") as demo:
     </div>
     """)
 
-if __name__ == "__main__":
-    demo.launch()
+port = int(os.environ.get("PORT", 10000))
+demo.launch(server_name="0.0.0.0", server_port=port, show_error=True)
