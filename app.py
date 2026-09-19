@@ -6,11 +6,10 @@ import tempfile
 import shutil
 import random
 from PIL import Image, ImageDraw, ImageFont
+import imageio_ffmpeg
 
-PEXELS_API_KEY = os.environ.get("PEXELS_API_KEY", "")
-
-# ─── Script generation templates ───────────────────────────────────────────────
-
+# Use bundled ffmpeg binary
+FFMPEG_BIN = imageio_ffmpeg.get_ffmpeg_exe()
 TEMPLATES = {
     "mystery": {
         "hooks": [
