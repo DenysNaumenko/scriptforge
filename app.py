@@ -321,19 +321,8 @@ def run(topic, tone_label, slides_count, progress=gr.Progress()):
     return generate_video(topic, tone, slides_count, progress)
 
 
-with gr.Blocks(
-    title="ScriptForge — AI Video Generator",
-    theme=gr.themes.Base(
-        primary_hue="violet",
-        neutral_hue="slate",
-        font=gr.themes.GoogleFont("DM Sans"),
-    ),
-    css="""
-    .gradio-container { max-width: 720px !important; margin: 0 auto; }
-    h1 { text-align: center; font-size: 2.2em !important; margin-bottom: 4px !important; }
-    .subtitle { text-align: center; color: #888; margin-bottom: 24px; font-size: 14px; }
-    """
-) as demo:
+with gr.Blocks(title="ScriptForge — AI Video Generator") as demo:
+
     gr.Markdown("# ⚡ ScriptForge")
     gr.HTML('<p class="subtitle">Вводи тему → получай готовое вертикальное видео</p>')
 
@@ -357,7 +346,7 @@ with gr.Blocks(
 
     with gr.Row():
         video_output = gr.Video(label="Готовое видео", height=500)
-        script_output = gr.Textbox(label="Скрипт", lines=15, show_copy_button=True)
+        script_output = gr.Textbox(label="Скрипт", lines=15)
 
     generate_btn.click(
         fn=run,
